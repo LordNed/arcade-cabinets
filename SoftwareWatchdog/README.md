@@ -1,6 +1,7 @@
 Software Watchdog
 ===============
-Usage: softwarewatchdog.exe <json arg string>
+Usage: 
+````softwarewatchdog.exe <json arg string>````
 
 Description:
 The Software Watchdog will launch the game, minimize all other windows and then wait for the game to close before re-launching the front end.
@@ -16,6 +17,8 @@ Note: Ensure you use a valid Json string. This can be validated by [Online Json 
 
 Example Json String
 ===============
+
+````
 {
 	"launcherPath" : "C:/My Launcher.exe",
 	"gameData" :
@@ -24,4 +27,4 @@ Example Json String
 		"launchParams" : "-nosound -noborder"
 	}
 }
-
+````
