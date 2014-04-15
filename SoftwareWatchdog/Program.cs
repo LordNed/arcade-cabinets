@@ -19,7 +19,7 @@ namespace arcade_cabinets
         static void Main(string[] args)
         {
             //Ensure they're passing the proper number of arguments.
-            if (args.Length != 1)
+            if (args.Length == 0)
             {
                 DebugLog("Invalid number of arguments specified! Usage:");
                 DebugLog("softwarewatchdog.exe <json encoded args here.>");
@@ -28,12 +28,18 @@ namespace arcade_cabinets
                 return;
             }
 
+            string combinedJson = "";
+            foreach (string s in args)
+            {
+                combinedJson += " " + s;
+            }
+
             //Now let's validate the json.
-            var jsonData = Json.Deserialize(args[0]) as Dictionary<string, object>;
+            var jsonData = Json.Deserialize(combinedJson) as Dictionary<string, object>;
             if (jsonData == null)
             {
                 DebugLog("Invalid json format specified. Use an online json validator to find out why! Json:");
-                DebugLog(args[0]);
+                DebugLog(combinedJson);
                 return;
             }
 
@@ -86,7 +92,7 @@ namespace arcade_cabinets
             bool bValid = true;
 
             //Ensure the launcher we want to re-open exists.
-            string launcherPath = jsonData["launcherPath"] as string;
+            string launcherPath = jsonData.ContainsKey("launcherPath") ? jsonData["launcherPath"] as string : null;
             if (launcherPath == null)
             {
                 DebugLog("Missing launcherPath argument!");
@@ -100,7 +106,7 @@ namespace arcade_cabinets
             }
 
             //Ensure the game we want to open exists.
-            var gameData = jsonData["gameData"] as Dictionary<string, object>;
+            var gameData = jsonData.ContainsKey("gameData") ? jsonData["gameData"] as Dictionary<string, object> : null;
             if (gameData == null)
             {
                 DebugLog("Missing gameData argument!");
